@@ -1,1 +1,1 @@
-This is the start of the Usagi Electric Tube Computer (UETC) GitHub repo and Wiki
+This is the start of the Usagi Electric Vacuum Tube Computer (UEVTC) GitHub repo and Wiki
