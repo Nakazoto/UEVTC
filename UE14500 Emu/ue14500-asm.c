@@ -775,7 +775,7 @@ static const char *emu_commands[num_instructions] =
 
 static int process_instruction(asm_state *state, char *line)
 {
-  int i;
+  unsigned i;
   char iend;
   size_t index;
   instruction instr = num_instructions;
