@@ -341,7 +341,8 @@ static int uninit(machine_state *state)
   {
     if (state->bits_set != 0)
     {
-      if (fputc(state->curr_byte, state->out_file) != state->curr_byte)
+      if ((unsigned)fputc(state->curr_byte, state->out_file) !=
+          state->curr_byte)
       {
         fputs("Error writing output file.\n", stderr);
         return 1;
@@ -2435,7 +2436,7 @@ static void write_data(machine_state *state, unsigned bit)
   /* If all bits are set in the byte, write it out. */
   if (state->bits_set == 8)
   {
-    if (fputc(state->curr_byte, state->out_file) != state->curr_byte)
+    if ((unsigned)fputc(state->curr_byte, state->out_file) != state->curr_byte)
     {
       state->error = "Error writing output file.";
     }
