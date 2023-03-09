@@ -7,7 +7,7 @@ LD		47	;Load 0o47 into RR
 STOC	47	;Store complement back into 0o57
 OEN		47	;If 0o47 is 1, skip next instructions
 
-;These are skipped it 0o57 is 1
+;These are skipped if 0o57 is 1
 ONE		00	;Store 1 in RR
 STO 	00	;Store 1 in 0o00 to get fibbo started
 STO 	10	;Store 1 in 0o10 to get fibbo started
