@@ -1,0 +1,24 @@
+Bootloader Tape MMIO
+Data (8-bits) = FF0
+Status Register = FF1
+          FF1 = 00 -> Busy
+          FF1 = 01 -> Byte ready
+          FF1 = 02 -> End of Tape
+Advance Tape = FF2 (any write to this register activates it)
+
+000: LRP 020   ; Load RRP with the address where the program will be stored
+002: LDA 000   ; Load RRA with literal value of 00
+004: ORI FF1   ; OR RRA with the paper tape MMIO register
+006: BZ  001   ; If value is all zeros, tape is busy, loop back
+008: LDA 002   ; Load A with literal value 02
+00A: ORE FF1   ; Check if we are end of tape (02 XOR 02 = 00)
+00C: BZ  020   ; If we are end of tape, jump to start of loaded program
+00E: LDL FF0   ; Not end of program, so byte is ready (process of elimination)
+010: STP 000   ; Store the value in RRA in the address loaded into RRP
+012: STL FF2   ; Store value in RRA into MMIO address, paper tape advance
+014: INP 000   ; Increment RRP by 1
+016: SCF 001   ; Set the link flag to 1
+018: BL  001   ; Jump to 001, looping around and reading in the next byte
+
+Address 000 ~ 01F is dedicated for bootstrap ROM
+Address FF0 ~ FFF is dedicated for MMIO (enough? we may need to expand this)
