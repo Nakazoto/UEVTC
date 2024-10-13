@@ -1,0 +1,22 @@
+Unmatched Fonts
+---------------
+
+Report Written:     16:59 Sunday, August 11, 2024
+Design Path:        C:\Users\Nakaz\Desktop\Electronics Projects\UEVTC Github\Design Files\SYS_Decode_Memory_v7.pcb
+Design Title:       
+Created:            2021/12/17 23:02:06
+Last Saved:         2024/02/21 11:07:40
+Editing Time:       4433 min
+Units:              mm (precision 1)
+
+
+The design has unmatched fonts on this system for the following:
+================================================================
+
+
+Unmatched fonts on named styles:
+================================
+
+    Font 'Spartan Medium' used by text style 'Style4_1'
+
+End Of Report.
