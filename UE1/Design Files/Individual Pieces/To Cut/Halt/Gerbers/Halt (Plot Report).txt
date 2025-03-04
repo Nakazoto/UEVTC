@@ -1,0 +1,150 @@
+Plot Report
+-----------
+
+Report Written:     13:19 Sunday, December 08, 2024
+Design Path:        C:\Users\Nakaz\Desktop\To Cut\Halt\Halt.pcb
+Design Title:       
+Created:            2024/12/08 13:17:59
+Last Saved:         2024/12/08 13:18:25
+Editing Time:       1 min
+Units:              mm (precision 1)
+
+
+Device Settings
+===============
+
+
+Gerber Settings
+===============
+
+    Leading zero suppression.
+    G01 assumed throughout.
+    Line termination <*> <CR> <LF>.
+    3.5 format absolute inches.
+    Format commands defined in Gerber file.
+    Aperture table defined in Gerber file.
+    Hardware arcs allowed.
+
+
+Drill Settings
+==============
+
+    Excellon Format 2
+    Format 3.5 absolute in inches.
+    Zero suppression Leading
+
+
+
+Plots Output
+============
+
+
+Gerber Output
+=============
+
+C:\Users\Nakaz\Desktop\To Cut\Halt\Halt - Bottom Copper.gbr
+
+    Layers:
+    -----------------
+    Bottom Copper
+
+    D-Code Shape  (thou)
+    -----------------------------------
+    D10    Round 39.37
+    D11    Round 68.90
+    D12    Round 70.87
+    D13    Round 118.11
+    D14    Rectangle 118.11 X 196.85
+    D15    Round 141.73
+    D16    Round 60.00
+    D17    Round 78.74
+
+Gerber Output
+=============
+
+C:\Users\Nakaz\Desktop\To Cut\Halt\Halt - Gerber Drill Data - [Through Hole].gbr
+
+    Layers:
+    ------------------
+    [Through Hole]
+
+    D-Code Shape  (thou)
+    -----------------------
+    D18    Round 35.00
+    D19    Round 86.61
+    D70    Round 32.00
+    D71    Round 31.50
+
+NC Drill Output
+===============
+
+C:\Users\Nakaz\Desktop\To Cut\Halt\Halt - NC Drill Data - [Through Hole].drl
+
+    Output:
+    ---------------------------
+    Plated Round Drill Holes
+    Plated Slots
+
+    Tool  Size           Count   ID
+    --------------------------------------
+    T001  0.03150 inches 6     E
+    T002  0.03200 inches 16    D
+    T003  0.03500 inches 97    B
+    T004  0.08661 inches 14    C
+    --------------------------------------
+    Total                133
+    --------------------------------------
+
+C:\Users\Nakaz\Desktop\To Cut\Halt\Halt - NC Drill Data - [Through Hole] (Unplated).drl
+
+    Output:
+    -----------------------------
+    Unplated Round Drill Holes
+    Unplated Slots
+
+    Tool  Size Count   ID
+    ----------------------------
+    ----------------------------
+    Total      0
+    ----------------------------
+
+
+Gerber Output
+=============
+
+C:\Users\Nakaz\Desktop\To Cut\Halt\Halt - Drill Ident Drawing - [Through Hole].gbr
+
+    Layers:
+    ------------------
+    [Through Hole]
+
+
+Drill Ident Drawing
+===================
+
+    Drill Plated Size Shape ID
+    -----------------------------------
+    35    Y      100  Round B
+    87    Y      100  Round C
+    32    Y      100  Round D
+    31    Y      100  Round E
+
+    D-Code Shape  (thou)
+    -----------------------
+    D20    Round 100.00
+    D21    Round 5.00
+
+Gerber Output
+=============
+
+C:\Users\Nakaz\Desktop\To Cut\Halt\Halt - Cut.gbr
+
+    Layers:
+    ------------------
+    Board Outlines
+
+    D-Code Shape  (thou)
+    -----------------------
+    D21    Round 5.00
+
+End Of Report.

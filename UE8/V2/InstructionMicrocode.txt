@@ -1,0 +1,191 @@
+BZ   Branch if Zero flag set       PC <- Literal
+0000 0000 XXXX XXXX (2 Byte instruction)
+     1. 
+     2. 
+     3. 
+     4. 
+     5. 
+     6. 
+     7. 
+     8. 
+     9. 
+
+BL   Branch if Link flag set       PC <- Literal
+0000 0001 XXXX XXXX (2 Byte instruction)
+     1. 
+     2. 
+     3. 
+     4. 
+     5. 
+     6. 
+     7. 
+     8. 
+     9. 
+
+JSR  Jump to Subroutine            MEM[literal] <- PC, PC <- Literal, PC++ 
+0000 0010 XXXX XXXX (2 Byte instruction)
+     1. Put value in PC onto data bus
+     2. While above, store value on data bus into HC
+     3. Write value in HC into core at literal memory address
+     4. Put literal value in IR2 onto data bus
+     5. While above, store value on data bus into PC
+     6. Increment PC (not needed?)
+     7. 
+     8. 
+     9. 
+
+JPI  Jump Indirect                 PC <- MEM[literal]
+0000 0011 XXXX XXXX (2 Byte instruction)
+     1. Read value at literal memory address from core and store in HC
+     2. Write value in HC back into core at literal memory address
+     3. Put value in HC onto data bus
+     4. While above, copy value on bus into PC register
+     5. 
+     6. 
+     7. 
+     8. 
+     9. 
+
+LAL  Load OA with literal value    OA < - Literal 8-bit value
+0000 0100 XXXX XXXX (2 Byte instruction)
+     1. Put value in IR2 onto data bus
+     2. While above, copy value on bus into OA register
+     3. 
+     4. 
+     5. 
+     6. 
+     7. 
+     8. 
+     9. 
+
+LAD  Load OA with direct value     OA < - MEM[literal]
+0000 0101 XXXX XXXX (2 Byte instruction)
+     1. Read value at literal memory address from core and store in HC
+     2. Write value in HC back into core at literal memory address
+     3. Put value in HC onto data bus
+     4. While above, copy value on bus into OA register
+     5. 
+     6. 
+     7. 
+     8. 
+     9. 
+
+SF   Set Flags                     Z <- Literal bit 0, C <- Literal bit 1
+0000 0110 XXXX XXXX (2 Byte instruction)
+     1. 
+     2. 
+     3. 
+     4. 
+     5. 
+     6. 
+     7. 
+     8. 
+     9. 
+
+ST   Store AC into direct memory   MEM[literal] <- AC
+0000 0111 XXXX XXXX (2 Byte instruction)
+     1. Put AC onto data bus
+     2. While above, copy value on data bus into HC
+     3. Write value in HC into core at literal memory address
+     4. 
+     5. 
+     6. 
+     7. 
+     8. 
+     9. 
+
+TAO  Transfer AC to OA             OA <- AC
+0000 1000 (1 byte instruction)
+     1. Put value in AC onto data bus
+     2. While above, copy value on bus into OA register
+     3. 
+     4. 
+     5. 
+     6. 
+     7. 
+     8. 
+     9. 
+
+TOA  Transfer OA to AC             AC <- OA
+0000 1001 (1 byte instruction)
+     1. Set link flag to 0
+     2. Inhibit AC as input to ALU
+     3. While above, perform add with carry
+     4. Latch value in ALU into AC
+     5. 
+     6. 
+     7. 
+     8. 
+     9. 
+
+ADC  Add with Carry                AC <- OA + AC + Carry
+0000 1010 (1 byte instruction)
+     1. Latch value in ALU into AC
+     2. 
+     3. 
+     4. 
+     5. 
+     6. 
+     7. 
+     8. 
+     9. 
+
+SHL  Shift bits left into carry    AC <- AC * 2
+0000 1011 (1 byte instruction)
+     1. Put value in AC onto data bus
+     2. While above, copy value on bus into OA register
+     3. Perform add with carry
+     4. Latch value in ALU into AC
+     5. 
+     6. 
+     7. 
+     8. 
+     9. 
+
+NOT  Invert AC                     AC <- NOT AC
+0000 1100 (1 byte instruction)
+     1. 
+     2. 
+     3. 
+     4. 
+     5. 
+     6. 
+     7. 
+     8. 
+     9. 
+
+AND  OA And with AC                AC <- OA AND AC
+0000 1101 (1 byte instruction)
+     1. 
+     2. 
+     3. 
+     4. 
+     5. 
+     6. 
+     7. 
+     8. 
+     9. 
+
+ORI  OA Or with AC                 AC <- OA OR OB
+0000 1110 (1 byte instruction)
+     1. 
+     2. 
+     3. 
+     4. 
+     5. 
+     6. 
+     7. 
+     8. 
+     9. 
+
+ORE  OA Exclusive Or with AC       AC <- OA XOR OB
+0000 1111 (1 byte instruction)
+     1. 
+     2. 
+     3. 
+     4. 
+     5. 
+     6. 
+     7. 
+     8. 
+     9. 

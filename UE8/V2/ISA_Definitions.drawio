@@ -1,0 +1,127 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
+  <diagram name="Page-1" id="Z4MB1r9JRalCj1pZI0pb">
+    <mxGraphModel dx="2284" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-1" value="0000" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-190" y="160" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-2" value="NNNN" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-150" y="160" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-3" value="IR1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-190" y="140" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-4" value="AAAA AAAA" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-90" y="160" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-5" value="IR2" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-90" y="140" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-7" value="" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rotation=-180;" vertex="1" parent="1">
+          <mxGeometry x="-150" y="190" width="100" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-10" value="0001" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="10" y="160" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-11" value="XXXX" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="160" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-12" value="IR1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="10" y="140" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-13" value="AAAA AAAA" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="160" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-14" value="IR2" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="110" y="140" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-15" value="" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rotation=-180;" vertex="1" parent="1">
+          <mxGeometry x="50" y="190" width="100" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-17" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;div&gt;Regular Instruction:&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;IR1 high nibble all 0, low nibble contains OpCode&lt;/font&gt;&lt;div style=&quot;font-size: 10px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 10px;&quot;&gt;IR2 contains either literal value or address to location in memory&lt;/div&gt;&lt;/div&gt;" style="shape=card;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-160" y="210" width="105" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-18" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;div&gt;MMIO Read:&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;IR1 high nibble X&#39;1&#39;, low nibble ignored&lt;/font&gt;&lt;div style=&quot;font-size: 10px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 10px;&quot;&gt;IR2 contains address for MMIO device&lt;/div&gt;&lt;/div&gt;" style="shape=card;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="210" width="110" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-19" value="0010" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="210" y="160" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-20" value="XXXX" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="160" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-21" value="IR1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="210" y="140" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-22" value="AAAA AAAA" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="160" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-23" value="IR2" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="310" y="140" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-24" value="" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rotation=-180;" vertex="1" parent="1">
+          <mxGeometry x="250" y="190" width="100" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-25" value="0100" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="410" y="160" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-26" value="XXXX" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="160" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-27" value="IR1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="410" y="140" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-28" value="BAAA AAAA" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="160" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-29" value="IR2" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="510" y="140" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-30" value="" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rotation=-180;" vertex="1" parent="1">
+          <mxGeometry x="450" y="190" width="100" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-31" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;div&gt;MMIO Write:&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;IR1 high nibble X&#39;2&#39;, low nibble ignored&lt;/font&gt;&lt;div style=&quot;font-size: 10px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 10px;&quot;&gt;IR2 contains address for MMIO device&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" style="shape=card;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="210" width="110" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-32" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;div&gt;Drum Read:&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;IR1 high nibble X&#39;4&#39;, low nibble ignored&lt;/font&gt;&lt;div style=&quot;font-size: 10px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 10px;&quot;&gt;IR2 bit 0 ~ 6 contain &quot;line&quot; address (one line has 128 bytes), bit 7 determins bank&lt;/div&gt;&lt;/div&gt;" style="shape=card;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="210" width="110" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-33" value="0101" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="610" y="160" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-34" value="XXXX" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="160" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-35" value="IR1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="610" y="140" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-36" value="BAAA AAAA" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="710" y="160" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-37" value="IR2" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="710" y="140" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-38" value="" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rotation=-180;" vertex="1" parent="1">
+          <mxGeometry x="650" y="190" width="100" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-39" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;div&gt;Drum Write:&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;IR1 high nibble X&#39;4&#39;, low nibble ignored&lt;/font&gt;&lt;div style=&quot;font-size: 10px;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 10px;&quot;&gt;IR2 bit 0 ~ 6 contain &quot;line&quot; address (one line has 128 bytes), bit 7 determins bank&lt;/div&gt;&lt;/div&gt;" style="shape=card;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="210" width="110" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-40" value="MMIO device puts value on data bus, ALU copies data bus into AC register" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="380" width="110" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-41" value="ALU puts AC register on data bus, MMIO devices copies value on data bus to its internal register" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="380" width="110" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-42" value="Separate state machine initiated, drum control asserts new position counter for RAM and controls reading/writing" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="380" width="110" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="oOyfOb5VFAlBX9cTeVP5-43" value="Separate state machine initiated, drum control asserts new position counter for RAM and controls reading/writing" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="380" width="110" height="100" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

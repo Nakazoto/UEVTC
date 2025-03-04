@@ -1,0 +1,13 @@
+
+
+Finite State Machine
+
+
+
+
+Drum Operation
+
+0: Wait until Index pulse
+1: Fill 8-bit shift register with serial values from external memory
+2: Copy shift register value into memory at DRPC
+3: Increment DRPC

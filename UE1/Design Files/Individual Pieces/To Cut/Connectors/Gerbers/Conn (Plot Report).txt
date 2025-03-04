@@ -1,0 +1,135 @@
+Plot Report
+-----------
+
+Report Written:     12:25 Monday, December 02, 2024
+Design Path:        C:\Users\Nakaz\Desktop\To Cut\Connectors\Conn.pcb
+Design Title:       
+Created:            2024/12/02 12:25:01
+Last Saved:         2024/12/02 12:25:24
+Editing Time:       0 min
+Units:              mm (precision 1)
+
+
+Device Settings
+===============
+
+
+Gerber Settings
+===============
+
+    Leading zero suppression.
+    G01 assumed throughout.
+    Line termination <*> <CR> <LF>.
+    3.5 format absolute inches.
+    Format commands defined in Gerber file.
+    Aperture table defined in Gerber file.
+    Hardware arcs allowed.
+
+
+Drill Settings
+==============
+
+    Excellon Format 2
+    Format 3.5 absolute in inches.
+    Zero suppression Leading
+
+
+
+Plots Output
+============
+
+
+Gerber Output
+=============
+
+C:\Users\Nakaz\Desktop\To Cut\Connectors\Conn - Bottom Copper.gbr
+
+    Layers:
+    -----------------
+    Bottom Copper
+
+    D-Code Shape  (thou)
+    -----------------------
+    D10    Round 39.37
+    D11    Round 68.90
+
+Gerber Output
+=============
+
+C:\Users\Nakaz\Desktop\To Cut\Connectors\Conn - Gerber Drill Data - [Through Hole].gbr
+
+    Layers:
+    ------------------
+    [Through Hole]
+
+    D-Code Shape  (thou)
+    -----------------------
+    D12    Round 35.00
+
+NC Drill Output
+===============
+
+C:\Users\Nakaz\Desktop\To Cut\Connectors\Conn - NC Drill Data - [Through Hole].drl
+
+    Output:
+    ---------------------------
+    Plated Round Drill Holes
+    Plated Slots
+
+    Tool  Size           Count   ID
+    --------------------------------------
+    T001  0.03500 inches 208   B
+    --------------------------------------
+    Total                208
+    --------------------------------------
+
+C:\Users\Nakaz\Desktop\To Cut\Connectors\Conn - NC Drill Data - [Through Hole] (Unplated).drl
+
+    Output:
+    -----------------------------
+    Unplated Round Drill Holes
+    Unplated Slots
+
+    Tool  Size Count   ID
+    ----------------------------
+    ----------------------------
+    Total      0
+    ----------------------------
+
+
+Gerber Output
+=============
+
+C:\Users\Nakaz\Desktop\To Cut\Connectors\Conn - Drill Ident Drawing - [Through Hole].gbr
+
+    Layers:
+    ------------------
+    [Through Hole]
+
+
+Drill Ident Drawing
+===================
+
+    Drill Plated Size Shape ID
+    -----------------------------------
+    35    Y      100  Round B
+
+    D-Code Shape  (thou)
+    -----------------------
+    D13    Round 100.00
+    D14    Round 5.00
+
+Gerber Output
+=============
+
+C:\Users\Nakaz\Desktop\To Cut\Connectors\Conn - Cut.gbr
+
+    Layers:
+    ------------------
+    Board Outlines
+
+    D-Code Shape  (thou)
+    -----------------------
+    D14    Round 5.00
+
+End Of Report.
