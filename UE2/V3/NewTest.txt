@@ -1,0 +1,45 @@
+DIM I AS INTEGER
+DIM RES AS INTEGER
+FOR I = 0 to 9 
+     RES = RES + 1
+NEXT I
+PRINT RES
+
+; Initial Program Setup
+; Fetch memory bank initializes to 0
+; 10 = RES, 11 = I, 12 = Max I
+; Program entry is X'00' bank 0
+STB  01        ; Set execute memory bank to 1
+LD   00        ; Load initail RES value into ACR
+STHC           ; Store ACR into HCR
+MOUT 10        ; Store HCR into memory address F0 at bank 1
+LD   00        ; Load starting I into ACR
+STHC           ; Copy that over to HCR
+MOUT 11        ; Store I into memory address F2 at bank 1
+LD   09        ; Load max I into ACR
+STHC           ; Store ACR into HCR
+NOR            ; Negate it
+INC            ; Add 1 to it so we can compare later for breakout
+MOUT 12        ; Store HCR into memory address F1 at bank 1
+SF   00        ; Clear the zero flag and carry flag to zero
+
+; Do the thing
+MIN  10        ; Load RES into HCR
+LDI            ; Load HCR into ACR
+INC            ; Increment ACR
+STHC           ; Store ACR into HCR
+MOUT 10        ; Store new RES back into memory
+MIN  12        ; Bring max I into HCR
+LDI            ; Copy that into ACR
+MIN  11        ; Bring current I into HCR
+ADC            ; Add them together
+BZ   1F        ; Jump to the end if it's zero
+LDI            ; Copy current I into ACR
+INC            ; Increment it
+STHC           ; Copy ACR over into HCR
+MOUT 11        ; Move new current I over into memory
+JMP  0E        ; Jump up to address 14 and start executing again (loop)
+MIN  10        ; Bring final RES value into HCR
+STB  0F        ; Set execute memory bank to F
+MOUT F0        ; Copy HCR into F0, I'm thinking the FX range will be MMIO
+JMP  1F        ; Jump to self (essentially a halt)
