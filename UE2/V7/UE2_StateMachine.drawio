@@ -1,0 +1,175 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.3 Chrome/130.0.6723.137 Electron/33.2.1 Safari/537.36" version="26.0.3">
+  <diagram name="Page-1" id="bYtNB0YNxuCeWqaJjl6Y">
+    <mxGraphModel dx="2537" dy="993" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="NWNepyYpS4t74kmyVj0q-1" value="MEIN: ON&lt;br&gt;MEOT: ON" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="260" y="160" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="NWNepyYpS4t74kmyVj0q-2" value="Instruct memory to output value at PCR onto MEBU" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="260" y="120" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="NWNepyYpS4t74kmyVj0q-4" value="0000" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="180" y="120" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="NWNepyYpS4t74kmyVj0q-5" value="0001 AND&lt;div&gt;Data Ready&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="180" y="200" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="NWNepyYpS4t74kmyVj0q-9" value="Instruct OIR and AIR to store value on MEBU" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="260" y="200" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="NWNepyYpS4t74kmyVj0q-10" value="MEIN: ON&lt;br&gt;MEOT: ON" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="260" y="240" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="NWNepyYpS4t74kmyVj0q-11" value="OIIN: ON&lt;br&gt;AIIN: ON" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="330" y="240" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-1" value="0010" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-360" y="320" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-2" value="OIR = 100" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="280" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-4" value="OIR = 111" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="980" y="280" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-5" value="OIR = 110" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="280" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-6" value="OIR = 101" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="280" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-7" value="OIR = 000" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-280" y="280" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-8" value="OIR = 001" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-100" y="280" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-9" value="OIR = 010" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="280" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-10" value="OIR = 011" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="280" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-11" value="LDA = Load Direct into ACR&lt;div&gt;Step 1&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="320" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-12" value="LDM = Load Direct into MAR&lt;div&gt;Step 1&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="320" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-13" value="AIOT: ON" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="360" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-14" value="LDA = Load Direct into ACR&lt;div&gt;Step 2&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="400" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-15" value="AIOT: ON" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="360" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-16" value="LDM = Load Direct into MAR&lt;div&gt;Step 2&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="400" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-17" value="0011" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-360" y="400" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-18" value="AIOT: ON" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="440" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-19" value="AIOT: ON" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="440" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-20" value="ALU: LD" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="440" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-21" value="MAIN: ON" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="440" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-22" value="LDA = Load Direct into ACR&lt;div&gt;Step 3&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="480" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-23" value="AIOT: ON&lt;br&gt;ALU: LD" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="520" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-24" value="ACIN: ON" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="520" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-25" value="0100" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-360" y="480" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-26" value="ADC = ACR + HCR + Carry&lt;div&gt;Step 1&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="320" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-27" value="ALU: ADD" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="440" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-28" value="ADC = ACR + HCR + Carry&lt;br&gt;&lt;div&gt;Step 2&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="400" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-29" value="HCOT: ON" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="360" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-30" value="HCOT: ON" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="440" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-31" value="ADC = ACR + HCR + Carry&lt;br&gt;&lt;div&gt;Step 3&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="480" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-32" value="HCOT: ON&lt;div&gt;ALU: ADD&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="520" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-33" value="ACIN: ON" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="520" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-34" value="AND = ACR AND HCR&lt;div&gt;Step 1&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="320" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-35" value="ALU: AND" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="690" y="440" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-36" value="AND = ACR AND HCR&lt;div&gt;Step 2&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="400" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-37" value="HCOT: ON" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="360" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-38" value="HCOT: ON" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="440" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-39" value="AND = ACR AND HCR&lt;div&gt;Step 3&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="480" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-40" value="HCOT: ON&lt;div&gt;ALU: AND&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="520" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-41" value="ACIN: ON" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="690" y="520" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-42" value="NOR = ACR NOR HCR&lt;div&gt;Step 1&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="320" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-43" value="ALU: AND" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="870" y="440" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-44" value="NOR = ACR NOR HCR&lt;br&gt;&lt;div&gt;Step 2&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="400" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-45" value="HCOT: ON" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="360" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-46" value="HCOT: ON" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="440" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-47" value="NOR = ACR NOR HCR&lt;br&gt;&lt;div&gt;Step 3&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="480" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-48" value="HCOT: ON&lt;div&gt;ALU: AND&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="520" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3Y0GEc5BFxeLh7h3kEDQ-49" value="ACIN: ON" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="870" y="520" width="70" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

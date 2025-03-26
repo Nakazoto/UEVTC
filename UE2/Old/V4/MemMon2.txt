@@ -1,0 +1,73 @@
+1. User types a four octal word, MUX supplies that word to HCR
+2. Computer breaks word up like so: BBB BMM MMM MMM
+     B: 4-bits for the EBNK register
+     M: 8-bits for the memory address
+3. Computer saves new EBNK value
+4. Computer uses low 8-bits of HCR as memory address
+5. Computer fills HCR with new memory value
+6. Computer outputs that value to the user via MUX
+7. User types a new four octal word, MUX supplies that word to HCR
+8. Computer copies that word into memory at MAR
+9. Computer outputs a carriage return to the user via MUX
+
+
+Program starts at memory address 0000
+MMIO fills address range 7000 ~ 7777
+     7000: MUX word received status bit
+     7001: MUX word sent status bit
+     7002: MUX received word register
+     7003: MUX send word register
+     7004: Clear status bits
+
+; Poll the MUX to see if a word has been received
+lop1:     LDD  7000      ; Load a direct value of 7000 into ACR
+          MOV  ACR,MAR   ; Copy 7000 from ACR into MAR
+          MIN            ; Load value at 7000 into HCR
+          LDD  7777      ; Load a direct value of 7777 into ACR
+          AND            ; And HCR and ACR and store the result in ACR
+          BZD  lop1      ; If the value is 0000, then bit wasn't set, so loop
+
+; Let's get the value at that address the user requested and send that to MUX
+          LDD  7002      ; Load a direct value of 7002 into ACR
+          MOV  ACR,MAR   ; Copy that over to MAR
+          MIN            ; Get the full word from the MUX
+          MOV  HCR,BFR   ; Store the word the user sent in BUR for later
+          MOV  HCR,MAR   ; Move the HCR bottom 12 bits into MAR
+          MIN            ; Get the value at that location
+          LDD  7003      ; Load a direct value of 7003 into ACR
+          MOV  ACR,MAR   ; Copy that over to MAR
+          MOT            ; Send the word in HCR over to the MUX for transmit out
+
+; Let's poll the MUX to make sure that the word has been succesfully sent
+; Then we'll clear the status bits of the MUX for the next round
+lop2:     LDD  7001      ; Load a direct value of 7000 into ACR
+          MOV  ACR,MAR   ; Copy 7001 from ACR into MAR
+          MIN            ; Load value at 7001 into HCR
+          LDD  7777      ; Load a direct value of 7777 into ACR
+          AND            ; And HCR and ACR and store the result in ACR
+          BZD  lop2      ; If the value is 0000, the MUX isn't ready, so loop
+          LDD  7004      ; Load direct value of 7004 into ACR
+          MOV  ACR,MAR   ; Move it into the MAR
+          MOT            ; Any value written to this address clears the bits
+
+; Poll the MUX to see if a new word has been received
+lop3:     LDD  7000      ; Load a direct value of 7000 into ACR
+          MOV  ACR,MAR   ; Copy 7000 from ACR into MAR
+          MIN            ; Load value at 7000 into HCR
+          LDD  7777      ; Load a direct value of 7777 into ACR
+          AND            ; And HCR and ACR and store the result in ACR
+          BZD  lop3      ; If the value is 0000, then bit wasn't set, so loop
+
+; New data value received
+          LDD  7002      ; Load a direct value of 7002 into ACR
+          MOV  ACR,MAR   ; Copy that over to MAR
+          MIN            ; Get the full word from the MUX
+          MOV  BFR,MAR   ; Move the address we stored in BUR over to MAR
+          MOT            ; User data in HCR into user address at MAR
+
+; Clear the status bits of the MUX then loop back to the top
+          LDD  7004      ; Load direct value of 7004 into ACR
+          MOV  ACR,MAR   ; Move it into the MAR
+          MOT            ; Any value written to this address clears the bits
+          LDD  lop1      ; Load start of program into ACR
+          MOV  ACR,PCR   ; Move that into PCR, effectively doing a jump

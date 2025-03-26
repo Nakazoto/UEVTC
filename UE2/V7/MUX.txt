@@ -1,0 +1,24 @@
+Send 4-bit words (TTY to MUX)
+0 000 ~ 111 = Data value
+1 000 = 
+1 001 = Space
+1 010 = Enter
+1 011 = Period
+1 100 = G
+1 101 = M
+1 110 = 
+
+
+Receive 4-bit words (MUX to TTY)
+0 000 = 0
+0 001 = 1 
+~
+0 110 = 6
+0 111 = 7
+1 000 = Figs
+1 001 = Space
+1 010 = Enter
+1 011 = Period
+1 100 = G
+1 101 = M
+1 110 = 
