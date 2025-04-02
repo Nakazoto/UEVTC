@@ -1,0 +1,76 @@
+Top:
+     Transmit FIGS out
+     Check for character received
+     If not, go to Top:
+     Check if value is period (1100)
+     If so, go to Modify:
+     Check if value is bell (1101)
+     If so, go to Start:
+     Go to Top:
+
+Modify:
+     Retransmit period out
+MStep0:
+     Check for character received
+     If not go to MStep0
+     Retransmit character out
+     Copy to ACR, shift left 9 times
+     AND with BFR and store in BFR
+MStep1:
+     Check for character received
+     If not go to MStep1
+     Retransmit character out
+     Copy to ACR, shift left 6 times
+     AND with BFR and store in BFR
+MStep2:
+     Check for character received
+     If not go to MStep2
+     Retransmit character out
+     Copy to ACR, shift left 3 times
+     AND with BFR and store in BFR
+MStep3:
+     Check for character received
+     If not go to MStep3
+     Retransmit character out
+     AND with BFR and store in MAR
+
+NewData:
+     Transmit space out
+NData0:
+     Check for character received
+     If not go to NData0
+     Retransmit character out
+     Copy to ACR, shift left 12 times
+     AND with BFR and store in BFR
+NData1:
+     Check for character received
+     If not go to NData1
+     Retransmit character out
+     Copy to ACR, shift left 9 times
+     AND with BFR and store in BFR
+NData2:
+     Check for character received
+     If not go to NData2
+     Retransmit character out
+     Copy to ACR, shift left 6 times
+     AND with BFR and store in BFR
+NData3:
+     Check for character received
+     If not go to NData3
+     Retransmit character out
+     Copy to ACR, shift left 3 times
+     AND with BFR and store in BFR
+NData4:
+     Check for character received
+     If not go to NData4
+     Retransmit character out
+     AND with BFR and store in HCR
+Move:
+     Move data from 
+
+     
+Start:
+     Retransmit bell out
+     
+
+
