@@ -6,6 +6,7 @@ DIM flin AS STRING
 REM Opcode and key input stuff
 DIM inpc AS STRING
 DIM inky AS STRING
+DIM inkt AS INTEGER
 DIM opco AS STRING
 DIM mema AS STRING
 DIM comm AS STRING
@@ -302,8 +303,33 @@ memstuff:
             IF tpbit = 0 AND tprr = 1 THEN outrg = outrg + trgt1
         END IF
     END IF
-    
-    REM Print all the flags and register values to screen
+
+REM Update the display
+GOSUB update
+REM Delay routine to make it not run at full tilt
+nextline:
+    TIMER ON
+        start = TIMER
+        DO
+        LOOP UNTIL TIMER > start + speed
+    TIMER OFF
+
+REM End of main loop
+skipcomm:
+LOOP UNTIL (EOF(1))
+
+REM If it's the end of the assembly program, seek back up to the top of
+REM the file, then jump back up to top and execut DO LOOP again
+SEEK #1, 2
+GOTO letsgo
+
+REM Close out the file and end the program
+goodbye:
+CLOSE #1
+END
+
+
+REM Subroutine to print all the flags and register values to screen
 update:
     LOCATE 1, 17, 0
     PRINT opco
@@ -379,38 +405,24 @@ update:
     IF (inprg AND 4) / 4 = 1 THEN PRINT "1";  ELSE PRINT "0";
     LOCATE 12, 19, 0
     IF (inprg AND 2) / 2 = 1 THEN PRINT "1";  ELSE PRINT "0";
-
-    REM Delay routine to make it not run at full tilt
-nextline:
-    TIMER ON
-        start = TIMER
-        DO
-        LOOP UNTIL TIMER > start + speed
-    TIMER OFF
-
-REM End of main loop
-skipcomm:
-LOOP UNTIL (EOF(1))
-
-REM If it's the end of the assembly program, seek back up to the top of
-REM the file, then jump back up to top and execut DO LOOP again
-SEEK #1, 2
-GOTO letsgo
-
-REM Close out the file and end the program
-goodbye:
-CLOSE #1
-END
+RETURN
 
 REM Halt subroutine
 halted:
 LOCATE 21, 14, 0
 PRINT "HALTED "
 LOCATE 22, 1, 0
-PRINT "PRESS ANY KEY TO RESUME..."
+PRINT "PRESS 'G' TO RESUME..."
 DO
-    SLEEP 1
-LOOP WHILE INKEY$ = ""
+    inky = INKEY$
+    IF inky = CHR$(97) OR inky = CHR$(100) OR inky = CHR$(119) THEN GOSUB toggle
+    TIMER ON
+        start = TIMER
+        DO
+        LOOP UNTIL TIMER > start + .1
+    TIMER OFF
+    IF inky = CHR$(71) OR inky = CHR$(103) THEN inkt = 1 ELSE inkt = 0
+LOOP WHILE inkt = 0
 LOCATE 21, 14, 0
 PRINT "RUNNING"
 LOCATE 22, 1, 0
@@ -426,17 +438,18 @@ LOCATE 13, 13, 0
 PRINT "        "
 LOCATE 13, inloc, 0
 PRINT "^"
-IF inky = CHR$(119) THEN
-      IF inloc = 13 THEN tsbit = 128
-      IF inloc = 14 THEN tsbit = 64
-      IF inloc = 15 THEN tsbit = 32
-      IF inloc = 16 THEN tsbit = 16
-      IF inloc = 17 THEN tsbit = 8
-      IF inloc = 18 THEN tsbit = 4
-      IF inloc = 19 THEN tsbit = 2
-      inbit = (inprg AND tsbit) / tsbit
+    IF inky = CHR$(119) THEN
+        IF inloc = 13 THEN tsbit = 128
+        IF inloc = 14 THEN tsbit = 64
+        IF inloc = 15 THEN tsbit = 32
+        IF inloc = 16 THEN tsbit = 16
+        IF inloc = 17 THEN tsbit = 8
+        IF inloc = 18 THEN tsbit = 4
+        IF inloc = 19 THEN tsbit = 2
+        inbit = (inprg AND tsbit) / tsbit
       IF inbit = 1 THEN inprg = inprg - tsbit ELSE inprg = inprg + tsbit
-END IF
+    END IF
+    GOSUB update
 RETURN
 
 REM Bad file name or path subroutine
