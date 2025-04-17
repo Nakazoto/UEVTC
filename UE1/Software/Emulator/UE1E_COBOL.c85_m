@@ -1,0 +1,799 @@
+000100$$ FEDLEVEL=5                                                                 
+000200$$ SET LINEINFO BINDINFO                                                      
+000300$$ SET BINARYEXTENDED                                                         
+001000                                                                              
+001100 IDENTIFICATION DIVISION.                                                     
+001200 PROGRAM-ID.                                                                  
+001300     USAGI-UE1-EMULATOR.                                                      
+001400 AUTHOR.                                                                      
+001500     P.KIMPEL, digm.com, SAN DIEGO, CA.                                       
+001600 DATE-WRITTEN.                                                                
+001700     APRIL 2025.                                                              
+001800 DATE-COMPILED.                                                               
+002000                                                                              
+002100******************************************************************            
+002200*                                                                *            
+002300*    USAGI/UE1/EMULATOR                                          *            
+002400*                                                                *            
+002500******************************************************************            
+002600*                                                                *            
+002700*    Copyright (C) 2025:                                         *            
+002800*            Paul H. Kimpel                                      *            
+003000*            San Diego, California                               *            
+003200*            http://www.digm.com                                 *            
+003300*                                                                *            
+003400*    This material may be copied and used for any purpose        *            
+003500*    providing this copyright notice is preserved and that       *            
+003600*    appropriate credit is given.                                *            
+003700*                                                                *            
+003800*    This material is offered AS-IS WITH NO WARRANTY. Author     *            
+003900*    hereby disclaims all warranties respecting this material,   *            
+004000*    expressed or implied, including without limitation warranty *            
+004100*    of design, merchantability, fitness for a particular        *            
+004200*    purpose and against infringement.                           *            
+010000*                                                                *            
+010100******************************************************************            
+010200*                                                                             
+010300* On his associated discord channel, David of the Usagi Electric              
+010400* You-Tube site perhaps unwittingly exressed a desire to have an              
+010500* emulator for his UE1 homebrew vacuum-tube computer system as a              
+010600* complement to his emulator written in Quick Basic (QB4). I've               
+010700* wanted to try writing a  simple computer system emulator in                 
+010800* COBOL for a long time, so here it is.                                       
+010900*                                                                             
+011000* This is basically just a straight translation of his QB4                    
+011100* emulator, but standard COBOL doesn't handle things like dynamic             
+011200* file name selection and keystroke-level interactivity very well,            
+011300* and the way that those types of things work varies widely among             
+011400* COBOL environments. Thus, in this feeble attempt there are some             
+011500* significant changes from QB4 in the way that user I/O works.                
+011600*                                                                             
+011700* This version is written in the COBOL-85 dialect used by the                 
+011800* Unisys ClearPath MCP systems, which are the modern descendants              
+011900* of the Burroughs B5500, B6X00/7X00, AND "A Series" systems. I               
+012000* chose this dialect because (a) it's the one I'm most familiar               
+012100* with, but (b) mostly because it's the only one I have readily               
+012200* available at the moment.                                                    
+012300*                                                                             
+012400* Data communications I/O on that system is message-based, not                
+012500* character based, and typically works with a block-mode terminal             
+012600* device or emulator variously known as the TD820, MT983, or T27.             
+012700* Input commands must be transmitted as whole messages, and thus              
+012800* require at least two keystrokes. Only the first character of                
+012900* the message is examined. Also, updating the emulator status by              
+013000* random positioning on the screen can be done, but would involve             
+013100* a lot of weird escape sequences, so the whole page is simply                
+013200* refreshed as a block each time.                                             
+013300*                                                                             
+013400* In mainframe COBOL, the association between a file variable (FD)            
+013500* in the program and a physical file is typically specified                   
+013600* externally in the command that runs the program (think IBM JCL),            
+013700* so all of the code in the QB4 program that accepts and checks               
+013800* the assembler file name has been removed here. As a result, the             
+013900* ability to execute multiple assembler files in one run has also             
+014000* been removed.                                                               
+014100*                                                                             
+014200* This program is designed to be run from the MCP timesharing                 
+014300* system, known as CANDE, which will automatically connect to                 
+014400* a "REMOTE" (data communications) file when it is opened in the              
+014500* program. A typical run command might look like:                             
+014600*                                                                             
+014700*    RUN OBJECT/UE1/EMULATOR; FILE ASMF=TESTPROG.BAS                          
+014800*                                                                             
+014900* Because the ESC character is difficult to transmit from the                 
+015000* block-mode terminal, transmit a "!" to terminate the program.               
+015100                                                                              
+015200* Note that the Unisys MCP systems internally use EBCDIC, not                 
+015300* ASCII. documentation for the COBOL dialect, file system, and                
+015400* other user-level compoents is freely available on the Unisys                
+015500* support web site at https://support.unisys.com/.                            
+050000*                                                                             
+050010******************************************************************            
+050020* MODIFICATION LOG.                                                           
+050030* -----------------                                                           
+050040* 2025-04-15  P.KIMPEL                                                        
+050041*    ORIGINAL VERSION, CONVERTED FROM                                         
+050042*    https://github.com/Nakazoto/UEVTC/blob/main/UE1/Emulator/                
+050043*    UE1EMU.BAS.                                                              
+099900******************************************************************            
+100000                                                                              
+100100 ENVIRONMENT DIVISION.                                                        
+100200******************************************************************            
+100300 CONFIGURATION SECTION.                                                       
+100400******************************************************************            
+100500 SOURCE-COMPUTER.                UNISYS-MCP.                                  
+100600 OBJECT-COMPUTER.                UNISYS-MCP.                                  
+110000                                                                              
+110200 INPUT-OUTPUT SECTION.                                                        
+110400 FILE-CONTROL.                                                                
+110500     SELECT TERM                                                              
+110600         ASSIGN                  REMOTE                                       
+110700         ORGANIZATION            SEQUENTIAL                                   
+110800         ACCESS MODE             SEQUENTIAL.                                  
+112000     SELECT ASMF                                                              
+112100         ASSIGN                  DISK                                         
+112200         ORGANIZATION            SEQUENTIAL                                   
+112300         ACCESS MODE             SEQUENTIAL.                                  
+150000                                                                              
+150100 DATA DIVISION.                                                               
+150200******************************************************************            
+150300 FILE SECTION.                                                                
+150400******************************************************************            
+150500                                                                              
+150600 FD  TERM                                                                     
+150700     RECORD CONTAINS             0 TO 1920 CHARACTERS                         
+150800                                     DEPENDING ON W-MSG-SIZE                  
+150900     VALUE OF                                                                 
+151000         BLOCKSTRUCTURE          EXTERNAL                                     
+151100     LABEL RECORDS               STANDARD.                                    
+151200 01 TERM-RECORD.                                                              
+151300     02 TERM-INKY                PIC X(1).                                    
+151400     02 FILLER                   PIC X(1919).                                 
+151500 01  TERM-TEXT.                                                               
+151600     02 TERM-CHAR                OCCURS 1920 INDEXED BY TERM-X.               
+151700       03 TERM-DIGIT             PIC 9(1).                                    
+160000                                                                              
+160100 FD  ASMF                                                                     
+160200     RECORD CONTAINS             80 CHARACTERS                                
+160300     VALUE OF                                                                 
+160400         DEPENDENTSPECS          TRUE                                         
+160500     LABEL RECORDS               STANDARD.                                    
+160600 01  ASMF-RECORD.                                                             
+160700     02 ASMF-OPCO.                                                            
+160800       03 ASMF-COMM              PIC X(1).                                    
+160900       03 FILLER                 PIC X(3).                                    
+161000     02 FILLER                   PIC X(1).                                    
+161100     02 ASMF-MEMA                PIC X(3).                                    
+161200     02 FILLER                   PIC X(72).                                   
+300000                                                                              
+300100******************************************************************            
+300200 WORKING-STORAGE SECTION.                                                     
+300300******************************************************************            
+300400                                                                              
+300700 77  W-X                         PIC S9(8).                                   
+300900 77  W-MSG-SIZE                  PIC S9(4)   VALUE ZERO.                      
+310000                                                                              
+310100***** Opcode and key input stuff                                              
+310200 77   INPC                       PIC X(1).                                    
+310300 77   INKY                       PIC X(1).                                    
+310400 77   INKT                       PIC 9(1)    VALUE ZERO.                      
+310500 77   SPEED                      PIC 9V9(7)  VALUE 1.                         
+310600                                                                              
+310700***** Flags                                                                   
+310800 77   FLAGO                      PIC 9(1)    VALUE ZERO.                      
+310900 77   FLAGF                      PIC 9(1)    VALUE ZERO.                      
+311000 77   WRT                        PIC 9(1)    VALUE ZERO.                      
+311100 77   SKZ                        PIC 9(1)    VALUE ZERO.                      
+311200 77   IOC                        PIC 9(1)    VALUE ZERO.                      
+311300 77   RTN                        PIC 9(1)    VALUE ZERO.                      
+311400                                                                              
+311500***** Registers                                                               
+311600*            Note that IENRG and OENRG are not used in the QB4                
+311700*            version, but IEN and OEN are, and are not declared.              
+311800 77   CARRY                      PIC 9(1)    VALUE ZERO.                      
+311900 77   RR                         PIC 9(1)    VALUE ZERO.                      
+312000 77   IEN                        PIC 9(1)    VALUE ZERO.                      
+312100 77   OEN                        PIC 9(1)    VALUE ZERO.                      
+312200 77   OUTRG                      PIC 9(3)    VALUE ZERO.                      
+312300 77   SCTRG                      PIC 9(3)    VALUE ZERO.                      
+312400 77   INPRG                      PIC 9(3)    VALUE ZERO.                      
+312500                                                                              
+312600***** Temporary holding cells                                                 
+312700 77   TPRR                       PIC 9(1)    VALUE ZERO.                      
+312800 77   TPDB                       PIC 9(1)    VALUE ZERO.                      
+312900 77   TPREG                      PIC 9(1)    VALUE ZERO.                      
+313000 77   TRGT1                      PIC 9(1)    VALUE ZERO.                      
+313100 77   TRGT2                      PIC 9(1)    VALUE ZERO.                      
+313200 77   TPBIT                      PIC 9(1)    VALUE ZERO.                      
+313300 77   INLOC                      PIC 9(1)    VALUE ZERO.                      
+313400 77   INBIT                      PIC 9(1)    VALUE ZERO.                      
+313500 77   TSBIT                      PIC 9(1)    VALUE ZERO.                      
+320000                                                                              
+320100 01  WCC-CHAR-CODES.                                                          
+320200     02 WCC-ESC                  PIC X(1)    VALUE "!".                       
+320300                                                                              
+320400 01  WMS-MENU-SCREEN.                                                         
+320500     02 FILLER                   PIC X(1)    VALUE @0C@.                      
+320600     02 FILLER                   PIC X(12)   VALUE                            
+320700             "UE1 Emulator".                                                  
+320800     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+320900     02 FILLER                   PIC X(54)   VALUE                            
+321000             "This UE1 Emulator requires an assembly program to ru            
+321100-            "n.".                                                            
+321200     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+321300     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+321400     02 FILLER                   PIC X(11)   VALUE                            
+321500             "How to use:".                                                   
+321600     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+321700     02 FILLER                   PIC X(57)   VALUE                            
+321800             "The program will run on a loop until '!' is sent to             
+321900-            "quit.".                                                         
+322000     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+322100     02 FILLER                   PIC X(62)   VALUE                            
+322200             "Send 'H' to halt the CPU. A Flag F instruction will             
+322300-            "also halt.".                                                    
+322400     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+322500     02 FILLER                   PIC X(41)   VALUE                            
+322600             "If the CPU is halted, send 'G' to resume.".                     
+322700     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+322800     02 FILLER                   PIC X(55)   VALUE                            
+322900             "Send 'A' or 'D' to select the desired input switch b            
+323000-            "it.".                                                           
+323100     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+323200     02 FILLER                   PIC X(50)   VALUE                            
+323300             "Send 'W' to toggle that bit from 0 to 1 or 1 to 0.".            
+323400     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+323500     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+323600     02 FILLER                   PIC X(31)   VALUE                            
+323700             "What is the clock speed in Hz: ".                               
+340000                                                                              
+340100 01  WSS-STATUS-SCREEN.                                                       
+340200     02 FILLER                   PIC X(1)    VALUE @0C@.                      
+340300     02 FILLER                   PIC X(16)   VALUE                            
+340400             "INSTRUCTION   : ".                                              
+340500     02 WSS-OPCO                 PIC X(4)    VALUE SPACE.                     
+340600     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+340700     02 FILLER                   PIC X(16)   VALUE                            
+340800             "MEMORY ADDRESS: ".                                              
+340900     02 WSS-MEMA                 PIC X(3)    VALUE SPACE.                     
+341000     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+341100     02 FILLER                   PIC X(20)   VALUE                            
+341200             "--------------------".                                          
+341300     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+341400     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+341500     02 FILLER                   PIC X(9)    VALUE "REGISTERS".               
+341600     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+341700     02 FILLER                   PIC X(16)   VALUE "CARRY     = ".            
+341800     02 WSS-CARRY                PIC 9(1)    VALUE ZERO.                      
+341900     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+342000     02 FILLER                   PIC X(16)   VALUE "RESULTS   = ".            
+342100     02 WSS-RR                   PIC 9(1)    VALUE ZERO.                      
+342200     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+342300     02 FILLER                   PIC X(16)   VALUE "INPUT EN  = ".            
+342400     02 WSS-IEN                  PIC 9(1)    VALUE ZERO.                      
+342500     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+342600     02 FILLER                   PIC X(16)   VALUE "OUTPUT EN = ".            
+342700     02 WSS-OEN                  PIC 9(1)    VALUE ZERO.                      
+342800     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+342900     02 FILLER                   PIC X(16)   VALUE "SCRATCH   = ".            
+343000     02 WSS-SCTRG                PIC X(8)    VALUE ZERO.                      
+343100     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+343200     02 FILLER                   PIC X(16)   VALUE "OUTPUT    = ".            
+343300     02 WSS-OUTRG                PIC X(8)    VALUE ZERO.                      
+343400     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+343500     02 FILLER                   PIC X(16)   VALUE "INPUT SW. = ".            
+343600     02 WSS-INPRG                PIC X(8)    VALUE ZERO.                      
+343700     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+343800     02 WSS-CARETS               PIC X(21)   VALUE SPACE.                     
+343900     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+344000     02 FILLER                   PIC X(16)   VALUE "FLAGS".                   
+344100     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+344200     02 FILLER                   PIC X(16)   VALUE "FLAG 0    = ".            
+344300     02 WSS-FLAGO                PIC 9(1)    VALUE ZERO.                      
+344400     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+344500     02 FILLER                   PIC X(16)   VALUE "WRITE     = ".            
+344600     02 WSS-WRT                  PIC 9(1)    VALUE ZERO.                      
+344700     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+344800     02 FILLER                   PIC X(16)   VALUE "I/O CON   = ".            
+344900     02 WSS-IOC                  PIC 9(1)    VALUE ZERO.                      
+345000     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+345100     02 FILLER                   PIC X(16)   VALUE "RETURN    = ".            
+345200     02 WSS-RTN                  PIC 9(1)    VALUE ZERO.                      
+345300     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+345400     02 FILLER                   PIC X(16)   VALUE "SKIP Z    = ".            
+345500     02 WSS-SKZ                  PIC 9(1)    VALUE ZERO.                      
+345600     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+345700     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+345800     02 FILLER                   PIC X(20)   VALUE                            
+345900             "PROCESSOR IS RUNNING".                                          
+346000     02 FILLER                   PIC X(1)    VALUE @0D@.                      
+500000                                                                              
+500100 PROCEDURE DIVISION.                                                          
+500200******************************************************************            
+500300 0000-SECTION SECTION.                                                        
+500400******************************************************************            
+500500 MAIN-LINE.                                                                   
+500600*    Entry point and program driver.                                          
+502000                                                                              
+502100     OPEN I-O TERM                                                            
+502200     MOVE FUNCTION LENGTH (WMS-MENU-SCREEN) TO W-MSG-SIZE                     
+502300     WRITE TERM-RECORD FROM WMS-MENU-SCREEN                                   
+502400                                                                              
+502500*    Read and convert the speed factor.                                       
+502600     COMPUTE W-MSG-SIZE = 8                                                   
+502700     READ TERM AT END                                                         
+502800       GO TO GOODBYE                                                          
+502900     END-READ                                                                 
+503000                                                                              
+503100     COMPUTE W-X = 0                                                          
+503200     PERFORM VARYING TERM-X FROM 1 BY 1                                       
+503300         UNTIL TERM-X > W-MSG-SIZE                                            
+503400       IF TERM-CHAR (TERM-X) IS NUMERIC                                       
+503500         COMPUTE W-X = W-X*10 + TERM-DIGIT (TERM-X)                           
+503600       END-IF                                                                 
+503700     END-PERFORM                                                              
+503800                                                                              
+503900     IF W-X = ZERO                                                            
+504000       COMPUTE W-X = 10                                                       
+504100     END-IF                                                                   
+504200     COMPUTE SPEED = 1.0/W-X                                                  
+504300                                                                              
+504400*    Open the assembler source file.                                          
+504500     OPEN INPUT ASMF                                                          
+504600                                                                              
+504700*    Draw the initial screen.                                                 
+504800     MOVE FUNCTION LENGTH (WSS-STATUS-SCREEN) TO W-MSG-SIZE                   
+504900     WRITE TERM-RECORD FROM WSS-STATUS-SCREEN                                 
+505000     COMPUTE INLOC = 13                                                       
+505100     MOVE SPACE TO WSS-CARETS                                                 
+505200     MOVE "^" TO WSS-CARETS (INLOC + 1:1).                                    
+510000                                                                              
+510100***** Primary Loop *****                                                      
+510200 LETSGO.                                                                      
+510300*    Check if a key has been pressed.                                         
+510400     PERFORM READ-KEY                                                         
+510500     EVALUATE TRUE                                                            
+510600       WHEN TERM-INKY = WCC-ESC                                               
+510700         GO TO GOODBYE                                                        
+510800       WHEN TERM-INKY = "H" OR FLAGF = 1                                      
+510900         PERFORM HALTED                                                       
+511000       WHEN TERM-INKY = "A" OR "D" OR "W"                                     
+511100         PERFORM TOGGLE                                                       
+511200     END-EVALUATE                                                             
+511300                                                                              
+511400*    Skip this instruction if the last one was SKZ and RR = 0.                
+511500     IF SKZ NOT = ZERO AND RR = ZERO                                          
+511600       COMPUTE SKZ = 0                                                        
+511700       GO TO NEXTLINE                                                         
+511800     END-IF                                                                   
+511900                                                                              
+512000*     Skip this instruction if the last one was RTN.                          
+512100     IF RTN NOT = ZERO                                                        
+512200       COMPUTE RTN = 0                                                        
+512300       GO TO NEXTLINE                                                         
+512400     END-IF                                                                   
+512500                                                                              
+512600*    Read in the next opcode and memory address.                              
+512700     READ ASMF AT END                                                         
+512800       GO TO EOF-ASMF                                                         
+512900     END-READ                                                                 
+513000     *> COMPUTE WRIT = 0        *> ???                                        
+513100     IF ASMF-COMM = ";"                                                       
+513200       GO TO SKIPCOMM                                                         
+513300     END-IF                                                                   
+513400                                                                              
+513500*    Reset flags                                                              
+513600     COMPUTE FLAGO = 0                                                        
+513700     COMPUTE FLAGF = 0                                                        
+513800     COMPUTE WRT = 0                                                          
+513900     COMPUTE IOC = 0           *> WAS LOC                                     
+514000     COMPUTE TRGT1 = 0                                                        
+514100     COMPUTE TRGT2 = 0                                                        
+520000                                                                              
+520100*    Set up correct memory location to write or read from.                    
+520200*    TRGT1 = the specific bit we want to focus on                             
+520300*    TRGT2 = the register we want to work on (1=scratch,                      
+520400*            2=output).                                                       
+520500     EVALUATE ASMF-MEMA                                                       
+520600       WHEN "SR0"                                                             
+520700         COMPUTE TRGT1 = 1                                                    
+520800         COMPUTE TRGT2 = 1                                                    
+520900         COMPUTE TPBIT = FUNCTION MOD (SCTRG, 2)                              
+521000       WHEN "SR1"                                                             
+521100         COMPUTE TRGT1 = 2                                                    
+521200         COMPUTE TRGT2 = 1                                                    
+521300         COMPUTE TPBIT = FUNCTION MOD (SCTRG/2, 2)                            
+521400       WHEN "SR2"                                                             
+521500         COMPUTE TRGT1 = 4                                                    
+521600         COMPUTE TRGT2 = 1                                                    
+521700         COMPUTE TPBIT = FUNCTION MOD (SCTRG/4, 2)                            
+521800       WHEN "SR3"                                                             
+521900         COMPUTE TRGT1 = 8                                                    
+522000         COMPUTE TRGT2 = 1                                                    
+522100         COMPUTE TPBIT = FUNCTION MOD (SCTRG/8, 2)                            
+522200       WHEN "SR4"                                                             
+522300         COMPUTE TRGT1 = 16                                                   
+522400         COMPUTE TRGT2 = 1                                                    
+522500         COMPUTE TPBIT = FUNCTION MOD (SCTRG/16, 2)                           
+522600       WHEN "SR5"                                                             
+522700         COMPUTE TRGT1 = 32                                                   
+522800         COMPUTE TRGT2 = 1                                                    
+522900         COMPUTE TPBIT = FUNCTION MOD (SCTRG/32, 2)                           
+523000       WHEN "SR6"                                                             
+523100         COMPUTE TRGT1 = 64                                                   
+523200         COMPUTE TRGT2 = 1                                                    
+523300         COMPUTE TPBIT = FUNCTION MOD (SCTRG/64, 2)                           
+523400       WHEN "SR7"                                                             
+523500         COMPUTE TRGT1 = 128                                                  
+523600         COMPUTE TRGT2 = 1                                                    
+523700         COMPUTE TPBIT = FUNCTION MOD (SCTRG/128, 2)                          
+523800       WHEN "OR0"                                                             
+523900         COMPUTE TRGT1 = 1                                                    
+524000         COMPUTE TRGT2 = 2                                                    
+524100         COMPUTE TPBIT = FUNCTION MOD (OUTRG, 2)                              
+524200       WHEN "OR1"                                                             
+524300         COMPUTE TRGT1 = 2                                                    
+524400         COMPUTE TRGT2 = 2                                                    
+524500         COMPUTE TPBIT = FUNCTION MOD (OUTRG/2, 2)                            
+524600       WHEN "OR2"                                                             
+524700         COMPUTE TRGT1 = 4                                                    
+524800         COMPUTE TRGT2 = 2                                                    
+524900         COMPUTE TPBIT = FUNCTION MOD (OUTRG/4, 2)                            
+525000       WHEN "OR3"                                                             
+525100         COMPUTE TRGT1 = 8                                                    
+525200         COMPUTE TRGT2 = 2                                                    
+525300         COMPUTE TPBIT = FUNCTION MOD (OUTRG/8, 2)                            
+525400       WHEN "OR4"                                                             
+525500         COMPUTE TRGT1 = 16                                                   
+525600         COMPUTE TRGT2 = 2                                                    
+525700         COMPUTE TPBIT = FUNCTION MOD (OUTRG/16, 2)                           
+525800       WHEN "OR5"                                                             
+525900         COMPUTE TRGT1 = 32                                                   
+526000         COMPUTE TRGT2 = 2                                                    
+526100         COMPUTE TPBIT = FUNCTION MOD (OUTRG/32, 2)                           
+526200       WHEN "OR6"                                                             
+526300         COMPUTE TRGT1 = 64                                                   
+526400         COMPUTE TRGT2 = 2                                                    
+526500         COMPUTE TPBIT = FUNCTION MOD (OUTRG/64, 2)                           
+526600       WHEN "OR7"                                                             
+526700         COMPUTE TRGT1 = 128                                                  
+526800         COMPUTE TRGT2 = 2                                                    
+526900         COMPUTE TPBIT = FUNCTION MOD (OUTRG/128, 2)                          
+527000       WHEN "RR "                                                             
+527100         COMPUTE TPBIT = RR                                                   
+527200       WHEN "IR1"                                                             
+527300         COMPUTE TPBIT = FUNCTION MOD (INPRG/2, 2)                            
+527400       WHEN "IR2"                                                             
+527500         COMPUTE TPBIT = FUNCTION MOD (INPRG/4, 2)                            
+527600       WHEN "IR3"                                                             
+527700         COMPUTE TPBIT = FUNCTION MOD (INPRG/8, 2)                            
+527800       WHEN "IR4"                                                             
+527900         COMPUTE TPBIT = FUNCTION MOD (INPRG/16, 2)                           
+528000       WHEN "IR5"                                                             
+528100         COMPUTE TPBIT = FUNCTION MOD (INPRG/32, 2)                           
+528200       WHEN "IR6"                                                             
+528300         COMPUTE TPBIT = FUNCTION MOD (INPRG/64, 2)                           
+528400       WHEN "IR7"                                                             
+528500         COMPUTE TPBIT = FUNCTION MOD (INPRG/128, 2)                          
+528600     END-EVALUATE                                                             
+530000                                                                              
+530100***** Execute the operation *****                                             
+530200     EVALUATE ASMF-OPCO                                                       
+530300       WHEN "NOP0"                                                            
+530400         COMPUTE FLAGO = 1                                                    
+530500       WHEN "LD  "                                                            
+530600         IF IEN = 1                                                           
+530700           COMPUTE RR = TPBIT                                                 
+530800         END-IF                                                               
+530900       WHEN "ADD "                                                            
+531000         IF IEN = 1                                                           
+531100           COMPUTE TPRR = RR + CARRY + TPBIT                                  
+531200           EVALUATE TPRR                                                      
+531300           WHEN 0                                                             
+531400             COMPUTE RR = 0                                                   
+531500             COMPUTE CARRY = 0                                                
+531600           WHEN 1                                                             
+531700             COMPUTE RR = 1                                                   
+531800             COMPUTE CARRY = 0                                                
+531900           WHEN 2                                                             
+532000             COMPUTE RR = 0                                                   
+532100             COMPUTE CARRY = 1                                                
+532200           WHEN 3                                                             
+532300             COMPUTE RR = 1                                                   
+532400             COMPUTE CARRY = 1                                                
+532500           END-EVALUATE                                                       
+532600         END-IF                                                               
+532700       WHEN "SUB "                                                            
+532800         IF IEN = 1                                                           
+532900           IF TPBIT = 1                                                       
+533000             COMPUTE TPDB = 0                                                 
+533100           ELSE                                                               
+533200             COMPUTE TPDB = 1                                                 
+533300           END-IF                                                             
+533400           COMPUTE TPRR = RR + CARRY + TPDB                                   
+533500           EVALUATE TPRR                                                      
+533600           WHEN 0                                                             
+533700             COMPUTE RR = 0                                                   
+533800             COMPUTE CARRY = 0                                                
+533900           WHEN 1                                                             
+534000             COMPUTE RR = 1                                                   
+534100             COMPUTE CARRY = 0                                                
+534200           WHEN 2                                                             
+534300             COMPUTE RR = 0                                                   
+534400             COMPUTE CARRY = 1                                                
+534500           WHEN 3                                                             
+534600             COMPUTE RR = 1                                                   
+534700             COMPUTE CARRY = 1                                                
+534800           END-EVALUATE                                                       
+534900         END-IF                                                               
+535000       WHEN "ONE "                                                            
+535100         COMPUTE RR = 1                                                       
+535200         COMPUTE CARRY = 0                                                    
+535300       WHEN "NAND"                                                            
+535400         IF IEN = 1                                                           
+535500           COMPUTE TPRR = RR * TPBIT                                          
+535600           IF TPRR = 1                                                        
+535700             COMPUTE RR = 0                                                   
+535800           ELSE                                                               
+535900             IF RR = 0                                                        
+536000               COMPUTE RR = 1                                                 
+536100             END-IF                                                           
+536200           END-IF                                                             
+536300         END-IF                                                               
+536400       WHEN "OR  "                                                            
+536500         IF IEN = 1                                                           
+536600           IF RR = 0 AND TPBIT = 0                                            
+536700             COMPUTE RR = 0                                                   
+536800           ELSE                                                               
+536900             COMPUTE RR = 1                                                   
+537000           END-IF                                                             
+537100         END-IF                                                               
+537200       WHEN "XOR "                                                            
+537300         IF IEN = 1                                                           
+537400           COMPUTE RR = FUNCTION MOD(RR + TPBIT, 2)                           
+537500         END-IF                                                               
+537600       WHEN "STO "                                                            
+537700         IF OEN = 1                                                           
+537800           COMPUTE WRT = 1                                                    
+537900         END-IF                                                               
+538000       WHEN "STOC"                                                            
+538100         IF OEN = 1                                                           
+538200           COMPUTE WRT = 1                                                    
+538300         END-IF                                                               
+538400       WHEN "IEN "                                                            
+538500         COMPUTE IEN = RR                                                     
+538600       WHEN "OEN "                                                            
+538700         COMPUTE OEN = RR                                                     
+538800       WHEN "IOC "                                                            
+538900         COMPUTE IOC = 1                                                      
+539000         *> BEEP -- not yet implemented --                                    
+539100       WHEN "RTN "                                                            
+539200         COMPUTE RTN = 1                                                      
+539300       WHEN "SKZ "                                                            
+539400         COMPUTE SKZ = 1                                                      
+539500       WHEN "NOPF"                                                            
+539600         COMPUTE FLAGF = 1                                                    
+539700       WHEN "HLT "                                                            
+539800         COMPUTE FLAGF = 1                                                    
+539900     END-EVALUATE.                                                            
+550000                                                                              
+550100*    Write the result to scratch or output if a STO/STOC op.                  
+550200 MEMSTUFF.                                                                    
+550300     IF WRT = 1                                                               
+550400       COMPUTE TPRR = RR                                                      
+550500       IF ASMF-OPCO = "STOC"                                                  
+550600         IF RR = 1                                                            
+550700           COMPUTE TPRR = 0                                                   
+550800         ELSE                                                                 
+550900           IF RR = 0                                                          
+551000             COMPUTE TPRR = 1                                                 
+551100           END-IF                                                             
+551200         END-IF                                                               
+551300       END-IF                                                                 
+551400       IF TRGT2 = 1                                                           
+551500         IF TPBIT = 1 AND TPRR = 0                                            
+551600           COMPUTE SCTRG = SCTRG - TRGT1                                      
+551700         END-IF                                                               
+551800         IF TPBIT = 0 AND TPRR = 1                                            
+551900           COMPUTE SCTRG = SCTRG + TRGT1                                      
+552000         END-IF                                                               
+552100       ELSE                                                                   
+552200         IF TRGT2 = 2                                                         
+552300           IF TPBIT = 1 AND TPRR = 0                                          
+552400             COMPUTE OUTRG = OUTRG - TRGT1                                    
+552500           END-IF                                                             
+552600           IF TPBIT = 0 AND TPRR = 1                                          
+552700             COMPUTE OUTRG = OUTRG + TRGT1                                    
+552800           END-IF                                                             
+552900         END-IF                                                               
+553000       END-IF                                                                 
+553100     END-IF                                                                   
+560000                                                                              
+560100*    Update the display.                                                      
+560200     PERFORM UPDATER.                                                         
+560300                                                                              
+560400*    Delay routine to make it not run at full tilt.                           
+560500 NEXTLINE.                                                                    
+560600     WAIT SPEED.                                                              
+560700                                                                              
+560800*    End of main loop.                                                        
+560900 SKIPCOMM.                                                                    
+561000     GO TO LETSGO.                                                            
+561100                                                                              
+561200*    If it's the end of the assembly program, seek back up to                 
+561300*    the top of the file, then jump back up to top and execute                
+561400*    the primary DO LOOP again.                                               
+561500 EOF-ASMF.                                                                    
+561600     CLOSE ASMF                                                               
+561700     OPEN INPUT ASMF                                                          
+561800     GO TO LETSGO.                                                            
+561900                                                                              
+562000 GOODBYE.                                                                     
+562100     CLOSE ASMF                                                               
+562200     CLOSE TERM                                                               
+562300     STOP RUN.                                                                
+600000                                                                              
+600100*    Subroutine to print all flags and register values to screen.             
+600200 UPDATER.                                                                     
+600300     MOVE ASMF-OPCO TO WSS-OPCO                                               
+600400     MOVE ASMF-MEMA TO WSS-MEMA                                               
+600500     MOVE CARRY TO WSS-CARRY                                                  
+600600     MOVE RR TO WSS-RR                                                        
+600700     MOVE IEN TO WSS-IEN                                                      
+600800     MOVE OEN TO WSS-OEN                                                      
+600900     MOVE FLAGO TO WSS-FLAGO                                                  
+601000     MOVE WRT TO WSS-WRT                                                      
+601100     MOVE IOC TO WSS-IOC                                                      
+601200     MOVE RTN TO WSS-RTN                                                      
+601300     MOVE SKZ TO WSS-SKZ                                                      
+601400                                                                              
+601500*    Print the scratch register to screen.                                    
+601600     MOVE ZERO TO WSS-SCTRG                                                   
+601700     IF FUNCTION MOD (SCTRG/128, 2) = 1                                       
+601800       MOVE "1" TO WSS-SCTRG (1:1)                                            
+601900     END-IF                                                                   
+602000     IF FUNCTION MOD (SCTRG/64, 2) = 1                                        
+602100       MOVE "1" TO WSS-SCTRG (2:1)                                            
+602200     END-IF                                                                   
+602300     IF FUNCTION MOD (SCTRG/32, 2) = 1                                        
+602400       MOVE "1" TO WSS-SCTRG (3:1)                                            
+602500     END-IF                                                                   
+602600     IF FUNCTION MOD (SCTRG/16, 2) = 1                                        
+602700       MOVE "1" TO WSS-SCTRG (4:1)                                            
+602800     END-IF                                                                   
+602900     IF FUNCTION MOD (SCTRG/8, 2) = 1                                         
+603000       MOVE "1" TO WSS-SCTRG (5:1)                                            
+603100     END-IF                                                                   
+603200     IF FUNCTION MOD (SCTRG/4, 2) = 1                                         
+603300       MOVE "1" TO WSS-SCTRG (6:1)                                            
+603400     END-IF                                                                   
+603500     IF FUNCTION MOD (SCTRG/2, 2) = 1                                         
+603600       MOVE "1" TO WSS-SCTRG (7:1)                                            
+603700     END-IF                                                                   
+603800     IF FUNCTION MOD (SCTRG, 2) = 1                                           
+603900       MOVE "1" TO WSS-SCTRG (8:1)                                            
+604000     END-IF                                                                   
+604100                                                                              
+604200*    Print the output register to screen.                                     
+604300     MOVE ZERO TO WSS-OUTRG                                                   
+604400     IF FUNCTION MOD (OUTRG/128, 2) = 1                                       
+604500       MOVE "1" TO WSS-OUTRG (1:1)                                            
+604600     END-IF                                                                   
+604700     IF FUNCTION MOD (OUTRG/64, 2) = 1                                        
+604800       MOVE "1" TO WSS-OUTRG (2:1)                                            
+604900     END-IF                                                                   
+605000     IF FUNCTION MOD (OUTRG/32, 2) = 1                                        
+605100       MOVE "1" TO WSS-OUTRG (3:1)                                            
+605200     END-IF                                                                   
+605300     IF FUNCTION MOD (OUTRG/16, 2) = 1                                        
+605400       MOVE "1" TO WSS-OUTRG (4:1)                                            
+605500     END-IF                                                                   
+605600     IF FUNCTION MOD (OUTRG/8, 2) = 1                                         
+605700       MOVE "1" TO WSS-OUTRG (5:1)                                            
+605800     END-IF                                                                   
+605900     IF FUNCTION MOD (OUTRG/4, 2) = 1                                         
+606000       MOVE "1" TO WSS-OUTRG (6:1)                                            
+606100     END-IF                                                                   
+606200     IF FUNCTION MOD (OUTRG/2, 2) = 1                                         
+606300       MOVE "1" TO WSS-OUTRG (7:1)                                            
+606400     END-IF                                                                   
+606500     IF FUNCTION MOD (OUTRG, 2) = 1                                           
+606600       MOVE "1" TO WSS-OUTRG (8:1)                                            
+606700     END-IF                                                                   
+606800                                                                              
+606900*    Print the input register to screen.                                      
+607000     MOVE ZERO TO WSS-INPRG                                                   
+607100     IF FUNCTION MOD (INPRG/128, 2) = 1                                       
+607200       MOVE "1" TO WSS-INPRG (1:1)                                            
+607300     END-IF                                                                   
+607400     IF FUNCTION MOD (INPRG/64, 2) = 1                                        
+607500       MOVE "1" TO WSS-INPRG (2:1)                                            
+607600     END-IF                                                                   
+607700     IF FUNCTION MOD (INPRG/32, 2) = 1                                        
+607800       MOVE "1" TO WSS-INPRG (3:1)                                            
+607900     END-IF                                                                   
+608000     IF FUNCTION MOD (INPRG/16, 2) = 1                                        
+608100       MOVE "1" TO WSS-INPRG (4:1)                                            
+608200     END-IF                                                                   
+608300     IF FUNCTION MOD (INPRG/8, 2) = 1                                         
+608400       MOVE "1" TO WSS-INPRG (5:1)                                            
+608500     END-IF                                                                   
+608600     IF FUNCTION MOD (INPRG/4, 2) = 1                                         
+608700       MOVE "1" TO WSS-INPRG (6:1)                                            
+608800     END-IF                                                                   
+608900     IF FUNCTION MOD (INPRG/2, 2) = 1                                         
+609000       MOVE "1" TO WSS-INPRG (7:1)                                            
+609100     END-IF                                                                   
+609200     *> Formatting for the low-order bit is not in the .BAS file.             
+609500                                                                              
+609600     COMPUTE W-MSG-SIZE = FUNCTION LENGTH (WSS-STATUS-SCREEN)                 
+609700     WRITE TERM-RECORD.                                                       
+620000                                                                              
+620100*    Halt subroutine.                                                         
+620200 HALTED.                                                                      
+620300     COMPUTE W-MSG-SIZE = 1                                                   
+620400     STRING "HALTED", @0D@, "TRANSMIT 'G' TO RESUME"                          
+620500         DELIMITED BY SIZE INTO TERM-RECORD POINTER W-MSG-SIZE                
+620600     SUBTRACT 1 FROM W-MSG-SIZE                                               
+620700     WRITE TERM-RECORD                                                        
+620800     PERFORM TEST AFTER UNTIL INKT NOT = ZERO                                 
+620900       PERFORM READ-KEY                                                       
+621000       IF TERM-INKY = "A" OR "D" OR "W"                                       
+621100         PERFORM TOGGLE                                                       
+621200       END-IF                                                                 
+621300       IF TERM-INKY = "G"                                                     
+621400         COMPUTE INKT = 1                                                     
+621500       ELSE                                                                   
+621600         COMPUTE INKT = 0                                                     
+621700       END-IF                                                                 
+621800     END-PERFORM                                                              
+621900                                                                              
+622000     PERFORM UPDATER                                                          
+622100     COMPUTE W-MSG-SIZE = 7                                                   
+622200     MOVE "RUNNING" TO TERM-RECORD (1:W-MSG-SIZE)                             
+622300     WRITE TERM-RECORD                                                        
+622400     COMPUTE FLAGF = 0.                                                       
+630000                                                                              
+630100*    Key input to change input register subroutine.                           
+630200 TOGGLE.                                                                      
+630300     IF TERM-INKY = "A" AND INLOC > 13                                        
+630400       COMPUTE INLOC = INLOC - 1                                              
+630500     END-IF                                                                   
+630600     IF TERM-INKY = "H" AND INLOC < 19                                        
+630700       COMPUTE INLOC = INLOC + 1                                              
+630800     END-IF                                                                   
+630900                                                                              
+631000     MOVE SPACE TO WSS-CARETS                                                 
+631100     MOVE "^" TO WSS-CARETS (INLOC + 1:1)                                     
+631200     IF TERM-INKY = "W"                                                       
+631300       EVALUATE INLOC                                                         
+631400         WHEN 13                                                              
+631500           COMPUTE TSBIT = 128                                                
+631600         WHEN 14                                                              
+631700           COMPUTE TSBIT = 64                                                 
+631800         WHEN 15                                                              
+631900           COMPUTE TSBIT = 32                                                 
+632000         WHEN 16                                                              
+632100           COMPUTE TSBIT = 16                                                 
+632200         WHEN 17                                                              
+632300           COMPUTE TSBIT = 8                                                  
+632400         WHEN 18                                                              
+632500           COMPUTE TSBIT = 4                                                  
+632600         WHEN 19                                                              
+632700           COMPUTE TSBIT = 2                                                  
+632800       END-EVALUATE                                                           
+632900                                                                              
+633000       COMPUTE INBIT = FUNCTION MOD(INPRG/TSBIT, 2)                           
+633100       IF INBIT = 1                                                           
+633200         COMPUTE INPRG = INPRG - TSBIT                                        
+633300       ELSE                                                                   
+633400         COMPUTE INPRG = INPRG + TSBIT                                        
+633500       END-IF                                                                 
+633600     END-IF                                                                   
+633700                                                                              
+633800     PERFORM UPDATER.                                                         
+900000                                                                              
+900100 READ-KEY.                                                                    
+900300*    Determines (in an implementation-dependent way) whether a                
+900400*    message has been received from the user. if so, reads the                
+900500*    message, returning the first character translated to upper-              
+900600*    case in TERM-INKY. If there is no message, or the message                
+900700*    length is zero, returns NULL (COBOL LOW-VALUE, hex 00) in                
+900800*    TERM-INKY.                                                               
+900900                                                                              
+901000     IF ATTRIBUTE CENSUS OF TERM = ZERO                                       
+901100       MOVE LOW-VALUE TO TERM-INKY                                            
+901200     ELSE                                                                     
+901300       COMPUTE W-MSG-SIZE = 1                                                 
+901400       READ TERM AT END                                                       
+901500         MOVE LOW-VALUE TO TERM-INKY                                          
+901600       END-READ                                                               
+901700       IF W-MSG-SIZE < 1                                                      
+901800         MOVE LOW-VALUE TO TERM-INKY                                          
+901900       ELSE                                                                   
+902000         MOVE FUNCTION UPPER-CASE (TERM-INKY) TO TERM-INKY                    
+902100       END-IF                                                                 
+902200     END-IF.                                                                  
+902300                                                                              
+999800                                                                              
+999900END PROGRAM USAGI-UE1-EMULATOR.                                               

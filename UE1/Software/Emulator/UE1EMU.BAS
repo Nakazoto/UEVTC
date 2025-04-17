@@ -23,8 +23,8 @@ DIM rtn AS INTEGER
 REM Registers
 DIM carry AS INTEGER
 DIM rr AS INTEGER
-DIM ienrg AS INTEGER
-DIM oenrg AS INTEGER
+DIM ien AS INTEGER
+DIM oen AS INTEGER
 DIM outrg AS INTEGER
 DIM sctrg AS INTEGER
 DIM inprg AS INTEGER
@@ -49,7 +49,7 @@ PRINT ""
 PRINT "How to use:"
 PRINT "The program will run on a loop until 'ESC' is pressed to quit."
 PRINT "Press 'H' to halt the CPU. A Flag F instruction will also halt."
-PRINT "If the CPU is halted, press any key to resume."
+PRINT "If the CPU is halted, press the 'G' key to resume."
 PRINT "Press 'A' or 'D' to select the desired input switch bit."
 PRINT "Press 'W' to toggle that bit from 0 to 1 or 1 to 0."
 PRINT ""
@@ -114,7 +114,6 @@ DO
     
     REM Read in next opcode and memory address
     LINE INPUT #1, inpc
-    writ = 0
     opco = LEFT$(inpc, 4)
     mema = MID$(inpc, 6, 3)
     comm = LEFT$(inpc, 1)
@@ -272,9 +271,9 @@ DO
         CASE "STOC"
             IF oen = 1 THEN wrt = 1
         CASE "IEN "
-            ien = rr
+            ien = tpbit
         CASE "OEN "
-            oen = rr
+            oen = tpbit
         CASE "IOC "
             ioc = 1
             BEEP
