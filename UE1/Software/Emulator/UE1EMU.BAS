@@ -13,7 +13,7 @@ DIM comm AS STRING
 DIM speed AS SINGLE
 
 REM Flags
-DIM flago AS INTEGER
+DIM flag0 AS INTEGER
 DIM flagf AS INTEGER
 DIM wrt AS INTEGER
 DIM skz AS INTEGER
@@ -120,7 +120,7 @@ DO
     IF comm = ";" THEN GOTO skipcomm
 
     REM Reset Flags
-    flago = 0
+    flag0 = 0
     flagf = 0
     wrt = 0
     ioc = 0
@@ -216,7 +216,7 @@ DO
     REM Execute the operation
     SELECT CASE opco
         CASE "NOP0"
-            flago = 1
+            flag0 = 1
         CASE "LD  "
             IF ien = 1 THEN rr = tpbit
         CASE "ADD "
@@ -467,4 +467,3 @@ DO
     END IF
     SLEEP 1
 LOOP
-
