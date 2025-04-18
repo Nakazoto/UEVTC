@@ -1,0 +1,55 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2638
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid1\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid101\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid201\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid301\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid4}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 My background:\
+\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\ls1\ilvl0\cf0 {\listtext	1.	}I have a BSEE but ended up doing software the past 26 years.\
+{\listtext	2.	}I came to your channel for the Centurion as I love old computers. I almost didn't watch the tube videos, but then thought as a EE even of my age (47), we learned absolutely nothing about tubes which seems a bit shameful (though even in the mid-90's they were already a generation or more obsolete. The videos were interesting, especially when you started building the UE14500 because I'm very interested in CPU design (Ben Eater's videos are great).\
+{\listtext	3.	}I have plenty of experience in C (I write in it for my day job 90+% of the time) and assembly (another 5% - 5% many other languages currently, but 20+ years hard core C++). But I had never used curses, so wanted to do that.\
+{\listtext	4.	}I had also always wanted to write an emulator and assembler, and this was a very nice small way to do that.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+Emulator history:\
+\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\ls2\ilvl0\cf0 {\listtext	1.	}Once the UE14500 CPU was complete I got the idea to recreate the look of it in a terminal application for fun so people could "play along" at home as you entered your programs on the real machine. This was just going to entail the layout of the tubes (to some poor fidelity) and especially the VFDs and remote. When I saw the remote the first time, it all really clicked to want to do this.\
+{\listtext	2.	}I decided to write the emulator in period-appropriate style, using the C programming language and the "curses" library for terminal I/O. Curses was around in the 80's, and has support for the ADDS terminals. I wanted the emulator to run on the Centurion some day. At the time, I wasn't holding out much hope, but the progress made recently has me thinking it's really doable. If nothing else, it could run on a Raspberry Pi, displaying on the ADDS. In any case, that was the reason for choosing C and curses - it's extremely lightweight and portable and period-appropriate. In fact, there was a video I watched with the guy who designed the VIC chips and he mentioned that they used mainframes for some hardware emulation of sorts back then, so it's really something that could have been done.\
+{\listtext	3.	}Coding up the visual layout took the most time - about a day and a half. This was done by rewatching (parts of) every build video multiple times to lay it out generally, then moving things around until it took up the right amount of screen space (limited to 80x24 characters for the ADDS).\
+{\listtext	4.	}Once the layout was done, it was on to coding in the 16 opcodes' logic. Again, that meant watching the videos again to see the behavior. Unfortunately (as an emulator writer, but fortunately for not putting people to sleep) you didn't do an exhaustive run through every opcode. I used the MC14500 data sheet for a lot of the upper opcodes you didn't cover much (since they don't do much without the additional pieces coming later). The UE14500 opcodes that differ from the MC were of course pretty self-explanatory.\
+{\listtext	5.	}It was at this point that I sent you the first version of the emulator and then worked on improving it based on your feedback and testing.\
+{\listtext	6.	}Once we got it working correctly and looking good, I thought it would be interesting to add the capability to run it from a script and save the actual output, anticipating the next modules you will be building.\
+{\listtext	7.	}Once I had the scripting capability, I thought it would be really easy to write the assembler. I'll detail that below. \
+{\listtext	8.	}The final revision to the emulator was to support the assembler better to allow for predictable timing behavior. This meant adding additional "commands" that the assembler could just directly set the instruction, data, and toggle the clock all with single instructions instead of movement and toggling. This final emulator can then run at a given clock speed pretty accurately.\
+{\listtext	9.	}One final thing in the final revision is support for breakpoints. This is most useful when used with the assembler. You can stop the emulator's execution at any point, observe and modify the state, then resume or quit.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+Assembler history:\
+\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\ls3\ilvl0\cf0 {\listtext	1.	}FYI, this was right around the time of the Centurion assembly syntax war, so I was hoping you wouldn't mind me defining the UE14500 format (using your opcode mnemonics). You didn't yell at me so I guess I'm ok. :)\
+{\listtext	2.	}One thing I wanted from the assembler from the beginning was the ability to output for the actual hardware as well as for the emulator. Most emulators can just read the hardware binary, but the UE14500 is a bit special (at least at this point) in being purely a CPU so simply reading machine code won't really do anything (yet).\
+{\listtext	3.	}The assembler has a number of directives meant to make working with the emulator actually useful. The primary one is the ability to embed data to be used as input, so the emulator can set the data line on the remote appropriately. The Hellorld! program uses the directive just once because the UE14500 instruction set lets you output text without any input data if you're clever. Not every architecture can claim that!\
+{\listtext	4.	}Other emulator directives include the startup initialization, clock speed, whether you want fixed-clock or fast-as-possible, and whether it should include the instruction to quit the emulator when your program finishes.\
+{\listtext	5.	}There is also a directive to just pass through emulator commands - this is how breakpoints work.\
+{\listtext	6.	}The assembler's "raw" output is meant for the actual hardware some day. It assembles the program to binary that you can feed in when you get that part built. It packs two instructions per byte in little-endian order.\
+{\listtext	7.	}The assembler is written in pure C, only using file I/O from the standard library. Once again, the goal is for this to easily run on the Centurion as well as any modern computer.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+Future directions:\
+\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\ls4\ilvl0\cf0 {\listtext	1.	}As additional parts of the UE14500 are built, the emulator can be expanded to emulate them.\
+{\listtext	2.	}At some point it will be a full-fledged system, so the emulator can be updated to read machine code.\
+{\listtext	3.	}I have tried to think of a way to feed data in to the emulator, but nothing seemed satisfactory with only the CPU so far, so we'll see how that plays out.\
+{\listtext	4.	}The assembler will need changes when the control logic is implemented because then labels and jumps make sense. The assembler has label support, but they don't do anything until the control logic is known so they can be used.\
+}

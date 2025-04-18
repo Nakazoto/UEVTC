@@ -1,0 +1,216 @@
+Plot Report
+-----------
+
+Report Written:     Saturday, December 02, 2023
+Design Path:        C:\Users\Nakaz\Desktop\TubeSBC\TubeSBC_V2.pcb
+Design Title:       
+Created:            2023/06/30 19:04:33
+Last Saved:         2023/12/02 19:27:25
+Editing Time:       302 min
+Units:              mm (precision 1)
+
+
+Device Settings
+===============
+
+
+Gerber Settings
+===============
+
+    Leading zero suppression.
+    G01 assumed throughout.
+    Line termination <*> <CR> <LF>.
+    3.5 format absolute inches.
+    Format commands defined in Gerber file.
+    Aperture table defined in Gerber file.
+    Hardware arcs allowed.
+
+
+Drill Settings
+==============
+
+    Excellon Format 2
+    Format 3.5 absolute in mm.
+    Zero suppression Leading
+
+
+
+Plots Output
+============
+
+
+Gerber Output
+=============
+
+C:\Users\Nakaz\Desktop\TubeSBC\TubeSBC_V2 - Top Silkscreen.gbr
+
+    Layers:
+    ------------------
+    Top Silkscreen
+
+    D-Code Shape  (thou)
+    -----------------------
+    D10    Round 5.00
+    D20    Round 1.00
+    D21    Round 10.00
+    D78    Round 5.12
+
+Gerber Output
+=============
+
+C:\Users\Nakaz\Desktop\TubeSBC\TubeSBC_V2 - Top Copper.gbr
+
+    Layers:
+    --------------
+    Top Copper
+
+    D-Code Shape  (thou)
+    ------------------------------------------------
+    D11    Round 39.37
+    D12    Round 68.90
+    D15    Round 60.00
+    D16    Round 86.61
+    D22    Round 110.24
+    D23    Rectangle 118.11 X 196.85  Rotation 90
+
+Gerber Output
+=============
+
+C:\Users\Nakaz\Desktop\TubeSBC\TubeSBC_V2 - Top Copper (Resist).gbr
+
+    Layers:
+    --------------
+    Top Copper
+
+    D-Code Shape  (thou)
+    ------------------------------------------------
+    D24    Round 120.24
+    D25    Round 78.90
+    D26    Rectangle 128.11 X 206.85  Rotation 90
+    D27    Round 70.00
+    D72    Round 96.61
+
+Gerber Output
+=============
+
+C:\Users\Nakaz\Desktop\TubeSBC\TubeSBC_V2 - Bottom Copper.gbr
+
+    Layers:
+    -----------------
+    Bottom Copper
+
+    D-Code Shape  (thou)
+    ------------------------------------------------
+    D11    Round 39.37
+    D12    Round 68.90
+    D15    Round 60.00
+    D16    Round 86.61
+    D22    Round 110.24
+    D23    Rectangle 118.11 X 196.85  Rotation 90
+
+Gerber Output
+=============
+
+C:\Users\Nakaz\Desktop\TubeSBC\TubeSBC_V2 - Bottom Copper (Resist).gbr
+
+    Layers:
+    -----------------
+    Bottom Copper
+
+    D-Code Shape  (thou)
+    ------------------------------------------------
+    D24    Round 120.24
+    D25    Round 78.90
+    D26    Rectangle 128.11 X 206.85  Rotation 90
+    D27    Round 70.00
+    D72    Round 96.61
+
+Gerber Output
+=============
+
+C:\Users\Nakaz\Desktop\TubeSBC\TubeSBC_V2 - Gerber Drill Data - [Through Hole].gbr
+
+    Layers:
+    ------------------
+    [Through Hole]
+
+    D-Code Shape  (thou)
+    -----------------------
+    D17    Round 35.00
+    D19    Round 32.00
+    D70    Round 35.43
+    D28    Round 51.18
+
+NC Drill Output
+===============
+
+C:\Users\Nakaz\Desktop\TubeSBC\TubeSBC_V2 - NC Drill Data - [Through Hole].drl
+
+    Output:
+    ---------------------------
+    Plated Round Drill Holes
+    Plated Slots
+
+    Tool  Size           Count   ID
+    --------------------------------------
+    T001  0.03200 inches 312   C
+    T002  0.03500 inches 224   A
+    T003  0.03543 inches 2     D
+    T004  0.05118 inches 168   E
+    --------------------------------------
+    Total                706
+    --------------------------------------
+
+C:\Users\Nakaz\Desktop\TubeSBC\TubeSBC_V2 - NC Drill Data - [Through Hole] (Unplated).drl
+
+    Output:
+    -----------------------------
+    Unplated Round Drill Holes
+    Unplated Slots
+
+    Tool  Size Count   ID
+    ----------------------------
+    ----------------------------
+    Total      0
+    ----------------------------
+
+
+Gerber Output
+=============
+
+C:\Users\Nakaz\Desktop\TubeSBC\TubeSBC_V2 - Drill Ident Drawing - [Through Hole].gbr
+
+    Layers:
+    ------------------
+    [Through Hole]
+
+
+Drill Ident Drawing
+===================
+
+    Drill Plated Size Shape ID
+    -----------------------------------
+    35    Y      100  Round A
+    32    Y      100  Round C
+    35    Y      100  Round D
+    51    Y      100  Round E
+
+    D-Code Shape  (thou)
+    -----------------------
+    D10    Round 5.00
+    D71    Round 100.00
+
+Gerber Output
+=============
+
+C:\Users\Nakaz\Desktop\TubeSBC\TubeSBC_V2 - Board Outline.gbr
+
+    Layers:
+    ------------------
+    Board Outlines
+
+    D-Code Shape  (thou)
+    -----------------------
+    D10    Round 5.00
+
+End Of Report.
