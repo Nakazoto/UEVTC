@@ -287,7 +287,7 @@ DO
             flagf = 1
     END SELECT
 
-    REM Write the result to scratch or output if a STO/STOC operation
+REM Write the result to scratch or output if a STO/STOC operation
 memstuff:
     IF wrt = 1 THEN
         tprr = rr
@@ -326,7 +326,6 @@ REM Close out the file and end the program
 goodbye:
 CLOSE #1
 END
-
 
 REM Subroutine to print all the flags and register values to screen
 update:

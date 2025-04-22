@@ -117,4 +117,3 @@ PRINT "Binary file creation finished."
 goodbye:
 CLOSE #1
 CLOSE #2
-
