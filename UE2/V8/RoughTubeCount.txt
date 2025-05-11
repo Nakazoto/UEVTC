@@ -1,0 +1,14 @@
+
+Part      Loc.      Tube      Count
+CPU       ACR       6J6       30
+          BVR       6J6       30
+          CHR       6J6       30
+          HCR       6J6       30
+          AIR       6J6       24
+          MAR       6J6       24
+          PCR       6J6       24
+          OIR       6J6       06
+          CAR       6J6       02
+          ZER       6J6       02
+          ALU       6J6       ??
+          Total              
