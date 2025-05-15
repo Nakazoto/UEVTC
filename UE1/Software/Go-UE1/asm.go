@@ -90,7 +90,6 @@ func (c *CPU) processAsm(args []string, speed int, nonint bool) {
 			}
 		}
 		if err != nil {
-
 			fatalln(err)
 		}
 
