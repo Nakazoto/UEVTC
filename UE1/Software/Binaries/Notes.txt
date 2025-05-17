@@ -1,0 +1,12 @@
+UE1MATH.BIN
+     A simple math program that adds or subtracts two 6-bit numbers
+     The program is copied in triplicate on the binary
+     This is to make it long enough for a good paper tape loop on the machine
+     In total, there are 464 bytes, and the tape should be 46.4 inches
+     (Excluding leader and trailer)
+
+UE1FIBO.BIN
+     A simple program that calculates the Fibonacci sequence up to 21
+     This program is alone on the tape and is therefore a little too short
+     In total, there are 202 bytes, and the tape should be 20.2 inches
+     (Excluding leader and trailer)
