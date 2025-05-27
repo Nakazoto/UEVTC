@@ -280,7 +280,7 @@ DO
         CASE "RTN "
             rtn = 1
         CASE "SKZ "
-            skz = 1
+            IF rr = 0 THEN skz = 1
         CASE "NOPF"
             flagf = 1
         CASE "HLT "
