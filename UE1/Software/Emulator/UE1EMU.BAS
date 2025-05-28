@@ -106,6 +106,7 @@ DO
         skz = 0
         GOTO nextline
     END IF
+    skz = 0
     REM Skip this instruction if last instruction was RTN
     IF rtn <> 0 THEN
         rtn = 0
@@ -280,7 +281,7 @@ DO
         CASE "RTN "
             rtn = 1
         CASE "SKZ "
-            IF rr = 0 THEN skz = 1
+            skz = 1
         CASE "NOPF"
             flagf = 1
         CASE "HLT "
