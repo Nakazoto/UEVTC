@@ -100,18 +100,6 @@ DO
     IF inky = CHR$(27) THEN GOTO goodbye
     IF inky = CHR$(104) OR flagf = 1 THEN GOSUB halted
     IF inky = CHR$(97) OR inky = CHR$(100) OR inky = CHR$(119) THEN GOSUB toggle
-   
-    REM Skip this instruction if last instruction was SKZ and RR = 0
-    IF skz <> 0 AND rr = 0 THEN
-        skz = 0
-        GOTO nextline
-    END IF
-    skz = 0
-    REM Skip this instruction if last instruction was RTN
-    IF rtn <> 0 THEN
-        rtn = 0
-        GOTO nextline
-    END IF
     
     REM Read in next opcode and memory address
     LINE INPUT #1, inpc
@@ -119,8 +107,21 @@ DO
     mema = MID$(inpc, 6, 3)
     comm = LEFT$(inpc, 1)
     IF comm = ";" THEN GOTO skipcomm
-
+    
+    REM Skip this instruction if last instruction was SKZ and RR = 0
+    IF skz <> 0 AND rr = 0 THEN
+        skz = 0
+        GOTO nextline
+    END IF
+    REM Skip this instruction if last instruction was RTN
+    IF rtn <> 0 THEN
+        rtn = 0
+        GOTO nextline
+    END IF
+    
     REM Reset Flags
+    rtn = 0
+    skz = 0
     flag0 = 0
     flagf = 0
     wrt = 0
